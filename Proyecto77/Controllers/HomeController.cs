@@ -19,7 +19,9 @@ namespace Proyecto77.Controllers
         // GET: Home/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            MantenimientoArticulo ma = new MantenimientoArticulo();
+            Articulo art = ma.Recuperar(id);
+            return View(art);
         }
 
         // GET: Home/Create
@@ -54,23 +56,24 @@ namespace Proyecto77.Controllers
         // GET: Home/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            MantenimientoArticulo ma = new MantenimientoArticulo();
+            Articulo art = ma.Recuperar(id);
+            return View(art);
         }
 
         // POST: Home/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
-            try
+            MantenimientoArticulo ma = new MantenimientoArticulo();
+            Articulo art = new Articulo
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+                Codigo = id,
+                Descripcion = collection["descripcion"].ToString(),
+                Precio = float.Parse(collection["precio"].ToString())
+            };
+            ma.Modificar(art);
+            return RedirectToAction("Index");
         }
 
         // GET: Home/Delete/5
